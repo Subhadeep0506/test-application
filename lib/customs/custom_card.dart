@@ -19,7 +19,6 @@ class CustomCard extends StatefulWidget {
 typedef PageNumberCallBack = void Function(int index);
 
 class CustomCardState extends State<CustomCard> {
-  late final PageNumberCallBack pageNumberCallBack;
   var q = Questions();
   int _currCard = 0;
   List<QuestionCard> cards = [];

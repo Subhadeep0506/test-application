@@ -56,10 +56,12 @@ class QuestionsDatabase {
     };
   }
 
-  Future<void> insertDataToDB(Question question) async {
+  Future<Question> insertDataToDB(Question question) async {
     final db = await instance.database;
 
     final id = await db.insert('questions', question.toJson());
+
+    return question.copy(id: id);
   }
 }
 
@@ -69,12 +71,24 @@ class Question {
   int? option;
   int? selected;
 
-  Question(this.id, this.option, this.question);
+  Question({this.id, this.option, this.question});
   Map<String, Object?> toJson() => {
         QuestionFields.id: id,
         QuestionFields.question: question,
         QuestionFields.selectedOptionField: selected,
       };
+
+  Question copy({
+    int? id,
+    String? question,
+    int? option,
+    int? selected,
+  }) =>
+      Question(
+        id: id ?? this.id,
+        option: option ?? this.option,
+        question: question ?? this.question,
+      );
 }
 
 class QuestionFields {
