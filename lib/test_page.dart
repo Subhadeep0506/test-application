@@ -1,20 +1,27 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:test_application_v1/customs/custom_card.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'customs/custom_card.dart';
 import 'customs/custom_modal.dart';
 
 class TestPage extends StatefulWidget {
-  const TestPage({Key? key}) : super(key: key);
+  TestPage({Key? key}) : super(key: key);
 
+  CarouselController c = CarouselController();
   @override
   _TestPageState createState() => _TestPageState();
 }
 
 class _TestPageState extends State<TestPage> {
-  CarouselController c = CustomCardState().carouselController;
+  @override
+  void initState() {
+    super.initState();
+    widget.c = CustomCardState().carouselController;
+  }
 
+  late Future<SharedPreferences> prefs;
   @override
   Widget build(BuildContext context) {
     double _sliderValue = 0;
@@ -25,7 +32,7 @@ class _TestPageState extends State<TestPage> {
         Container(
           margin: const EdgeInsets.only(right: 30),
           child: IconButton(
-            onPressed: () => CustomModal(c).showQuestionMenu(context),
+            onPressed: () => CustomModal(widget.c).showQuestionMenu(context),
             icon: const Icon(Icons.book_rounded),
           ),
         )

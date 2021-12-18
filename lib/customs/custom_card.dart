@@ -56,18 +56,6 @@ class CustomCardState extends State<CustomCard> {
     ];
   }
 
-  Future<void> jumpToQuestion(int index) async {
-    try {
-      return await carouselController.animateToPage(
-        index,
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.linear,
-      );
-    } catch (e) {
-      print(e);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(

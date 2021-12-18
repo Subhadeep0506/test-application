@@ -28,19 +28,37 @@ class _ResultPageState extends State<ResultPage> {
         body: Container(
           color: Colors.white,
           padding: const EdgeInsets.all(20.0),
-          child: Table(
-            border: TableBorder.all(color: Colors.black),
-            children: const [
-              TableRow(children: [
-                Text('Cell 1'),
-                Text('Cell 2'),
-                Text('Cell 3'),
-              ]),
-              TableRow(children: [
-                Text('Cell 4'),
-                Text('Cell 5'),
-                Text('Cell 6'),
-              ])
+          child: Column(
+            children: [
+              // To display column names common for all results
+              Table(
+                border: TableBorder.all(
+                  color: Colors.black,
+                  width: 2,
+                ),
+                children: const [
+                  TableRow(children: [
+                    Padding(padding: EdgeInsets.all(5), child: Text('Question')),
+                    Padding(padding: EdgeInsets.all(5), child: Text('Status')),
+                    Padding(padding: EdgeInsets.all(5), child: Text('Correct/Incorrect')),
+                    Padding(padding: EdgeInsets.all(5), child: Text('Time spent')),
+                    Padding(padding: EdgeInsets.all(5), child: Text('Marks')),
+                  ]),
+                ],
+              ),
+              // this table will build dynamic table based on result
+              Table(
+                border: TableBorder.all(color: Colors.black),
+                children: const [
+                  TableRow(children: [
+                    Text('1'),
+                    Text('Attempted'),
+                    Text('Correct'),
+                    Text('35'),
+                    Text('120'),
+                  ])
+                ],
+              ),
             ],
           ),
         ),

@@ -38,7 +38,6 @@ class QuestionsDatabase {
     ($idField INTEGER PRIMARY KEY NOT NULL, 
      $questionField VARCHAR (50) NOT NULL,
      $selectedField INTEGER
-       
     )
     ''');
   }
@@ -47,6 +46,20 @@ class QuestionsDatabase {
     final db = await instance.database;
 
     db.close();
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': idField,
+      'question': questionField,
+      'selected': selectedField,
+    };
+  }
+
+  Future<void> insertDataToDB(Question question) async {
+    final db = await instance.database;
+
+    final id = await db.insert('questions', question.toJson());
   }
 }
 
@@ -57,6 +70,11 @@ class Question {
   int? selected;
 
   Question(this.id, this.option, this.question);
+  Map<String, Object?> toJson() => {
+        QuestionFields.id: id,
+        QuestionFields.question: question,
+        QuestionFields.selectedOptionField: selected,
+      };
 }
 
 class QuestionFields {
