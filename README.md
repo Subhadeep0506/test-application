@@ -14,6 +14,5 @@ Additional dependencies use:
 
 Download the .apk file and install
 
-app-armeabi-v7a-release[apk]
-
-[apk]: https://www.linkedin.com/in/subhadeep-mandal-460078200/
+[app-armeabi-v7a-release]
+[app-armeabi-v7a-release]: https://github.com/Subhadeep0506/test-application/blob/master/apks/app-armeabi-v7a-release.apk
