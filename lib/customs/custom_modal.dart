@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:test_application_v1/customs/custom_card.dart';
 import 'package:test_application_v1/data/questions.dart';
 
+// Bottom sheet that displays all the questions.
+// Tapping on the question number will take user to the particular question
 class CustomModal extends StatelessWidget {
   Questions q = Questions();
   late int length = q.questions.length;
@@ -12,9 +14,10 @@ class CustomModal extends StatelessWidget {
   void initState() {}
 
   CarouselController controller;
-
+  int currentCard = 0;
   CustomModal(this.controller);
 
+  // THis function shows the BottomModalSheet
   void showQuestionMenu(BuildContext ctx) {
     showModalBottomSheet(
       shape: RoundedRectangleBorder(
@@ -53,6 +56,7 @@ class CustomModal extends StatelessWidget {
                       duration: Duration(milliseconds: 300),
                       curve: Curves.linear,
                     );
+                    currentCard = index;
                     Navigator.of(context).pop();
                   },
                   child: Text(

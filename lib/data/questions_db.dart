@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -5,10 +7,11 @@ import 'package:path/path.dart';
 class QuestionsDatabase {
   QuestionFields q = QuestionFields();
   // column names for question table
+  String tableName = 'questions';
   String idField = QuestionFields.id;
   String questionField = QuestionFields.question;
   String optionField = QuestionFields.correctOption;
-  String selectedField = QuestionFields.selectedOptionField;
+  String selectedField = QuestionFields.selectedOption;
 
   static final QuestionsDatabase instance = QuestionsDatabase._init();
 
@@ -34,7 +37,7 @@ class QuestionsDatabase {
 
   Future _createDB(Database db, int version) async {
     await db.execute('''
-    CREATE TABLE IF NOT EXISTS questions 
+    CREATE TABLE IF NOT EXISTS $tableName 
     ($idField INTEGER PRIMARY KEY NOT NULL, 
      $questionField VARCHAR (50) NOT NULL,
      $selectedField INTEGER
@@ -56,12 +59,41 @@ class QuestionsDatabase {
     };
   }
 
+  // Below functions are to perform CRUD operations on the database
+  // to insert question into table
   Future<Question> insertDataToDB(Question question) async {
     final db = await instance.database;
 
-    final id = await db.insert('questions', question.toJson());
+    final id = await db.insert(tableName, question.toJson());
 
     return question.copy(id: id);
+  }
+
+  // to read question from table using question id
+  Future<Question> readQuestionWithId(int id) async {
+    final db = await instance.database;
+
+    final maps = await db.query(
+      tableName,
+      columns: QuestionFields.values,
+      where: '${QuestionFields.id} = ?',
+      whereArgs: [id],
+    );
+
+    if (maps.isNotEmpty) {
+      return Question.fromJson(maps.first);
+    } else {
+      throw Exception('ID $id not found');
+    }
+  }
+
+  // To read entire table
+  Future<List<Question>> readAllQuestions() async {
+    final db = await instance.database;
+
+    final result = await db.query(tableName);
+    // returning the table as a list
+    return result.map((json) => Question.fromJson(json)).toList();
   }
 }
 
@@ -75,7 +107,7 @@ class Question {
   Map<String, Object?> toJson() => {
         QuestionFields.id: id,
         QuestionFields.question: question,
-        QuestionFields.selectedOptionField: selected,
+        QuestionFields.selectedOption: selected,
       };
 
   Question copy({
@@ -89,11 +121,24 @@ class Question {
         option: option ?? this.option,
         question: question ?? this.question,
       );
+
+  static Question fromJson(Map<String, Object?> first) => Question(
+        id: first[QuestionFields.id] as int?,
+        question: first[QuestionFields.question] as String?,
+        option: first[QuestionFields.selectedOption] as int?,
+      );
 }
 
 class QuestionFields {
   static String id = '_id';
   static String question = 'question';
   static String correctOption = 'option';
-  static String selectedOptionField = 'selected';
+  static String selectedOption = 'selected';
+
+  static final List<String> values = [
+    id,
+    question,
+    correctOption,
+    selectedOption,
+  ];
 }

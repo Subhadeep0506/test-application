@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:test_application_v1/home_page.dart';
 
+// Result page to show the result table
+// Temporarily shows dummy table as results
 class ResultPage extends StatefulWidget {
   const ResultPage({Key? key}) : super(key: key);
 

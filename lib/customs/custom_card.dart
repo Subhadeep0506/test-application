@@ -8,10 +8,13 @@ import 'package:test_application_v1/data/questions.dart';
 import 'custom_list_tile.dart';
 import 'custom_modal.dart';
 
+// This Widget contains the CarouselSlider and the navigator to navigate accross questions
 class CustomCard extends StatefulWidget {
   CustomCard({Key? key}) : super(key: key);
+
   int currentCard = 0;
   final CarouselController carouselController = CarouselController();
+
   @override
   CustomCardState createState() => CustomCardState();
 }
@@ -19,11 +22,15 @@ class CustomCard extends StatefulWidget {
 typedef PageNumberCallBack = void Function(int index);
 
 class CustomCardState extends State<CustomCard> {
+  // Temporarily using dummy list data to show questions and options
   var q = Questions();
-  int _currCard = 0;
+  int currCard = 0;
   List<QuestionCard> cards = [];
 
   CarouselController carouselController = CustomCard().carouselController;
+
+  void update() {}
+
   @override
   void initState() {
     super.initState();
@@ -66,9 +73,15 @@ class CustomCardState extends State<CustomCard> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          // swipeable question cards
           CarouselSlider(
             carouselController: carouselController,
             options: CarouselOptions(
+              onPageChanged: (index, reason) {
+                setState(() {
+                  currCard = index;
+                });
+              },
               enableInfiniteScroll: false,
               viewportFraction: 1,
               autoPlay: false,
@@ -88,7 +101,8 @@ class CustomCardState extends State<CustomCard> {
                   child: Container(
                     margin: const EdgeInsets.only(right: 20, left: 20),
                     child: ElevatedButton(
-                      onPressed: _currCard == 0
+                      // if on the first question, disable the PREVIOUS button
+                      onPressed: currCard == 0
                           ? null
                           : () {
                               carouselController.previousPage(
@@ -96,8 +110,8 @@ class CustomCardState extends State<CustomCard> {
                                 curve: Curves.linear,
                               );
                               setState(() {
-                                if (_currCard > 0) {
-                                  _currCard--;
+                                if (currCard > 0) {
+                                  currCard--;
                                 }
                               });
                             },
@@ -113,7 +127,9 @@ class CustomCardState extends State<CustomCard> {
                   child: Container(
                     margin: const EdgeInsets.only(right: 20, left: 5),
                     child: ElevatedButton(
-                      onPressed: _currCard == cards.length - 1
+                      // if reached last question, show SUBMIT button
+                      // else show the NEXT button
+                      onPressed: currCard == cards.length - 1
                           ? () {
                               ShowAlertDialog().showAlertDialog(context);
                             }
@@ -123,12 +139,12 @@ class CustomCardState extends State<CustomCard> {
                                 curve: Curves.linear,
                               );
                               setState(() {
-                                if (_currCard < cards.length) {
-                                  _currCard++;
+                                if (currCard < cards.length) {
+                                  currCard++;
                                 }
                               });
                             },
-                      child: _currCard == cards.length - 1 ? const Text('SUBMIT') : const Text('NEXT'),
+                      child: currCard == cards.length - 1 ? const Text('SUBMIT') : const Text('NEXT'),
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(130, 50),
                       ),
@@ -155,7 +171,7 @@ class CustomCardState extends State<CustomCard> {
                   width: 45,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(45 / 2.0),
-                    color: cards[_currCard].color,
+                    color: cards[currCard].color,
                   ),
                 )
               ],
@@ -167,6 +183,8 @@ class CustomCardState extends State<CustomCard> {
   }
 }
 
+/// The custom card that is would contain the questions and options
+///
 class QuestionCard extends StatefulWidget {
   final Color color;
   String _question = '';

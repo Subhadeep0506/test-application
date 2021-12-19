@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'customs/custom_card.dart';
 import 'customs/custom_modal.dart';
 
+// The page that is shown when the user starts the exam
 class TestPage extends StatefulWidget {
   TestPage({Key? key}) : super(key: key);
 
@@ -31,10 +32,11 @@ class _TestPageState extends State<TestPage> {
       actions: [
         Container(
           margin: const EdgeInsets.only(right: 30),
-          child: IconButton(
-            onPressed: () => CustomModal(widget.c).showQuestionMenu(context),
-            icon: const Icon(Icons.book_rounded),
-          ),
+          // Temporarily disabling navigation grid
+          // child: IconButton(
+          //   onPressed: () => CustomModal(widget.c).showQuestionMenu(context),
+          //   icon: const Icon(Icons.book_rounded),
+          // ),
         )
       ],
     );
