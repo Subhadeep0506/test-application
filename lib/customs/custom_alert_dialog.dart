@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:test_application_v1/result_page.dart';
-import 'package:test_application_v1/test_page.dart';
+import '../screens/result_page.dart';
+import 'package:test_application_v1/screens/test_page.dart';
 
 class ShowAlertDialog {
   showAlertDialog(BuildContext context) {

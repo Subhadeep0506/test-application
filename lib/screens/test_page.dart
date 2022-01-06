@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:test_application_v1/customs/custom_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'customs/custom_card.dart';
-import 'customs/custom_modal.dart';
+import '../customs/custom_card.dart';
+import '../customs/custom_modal.dart';
 
 // The page that is shown when the user starts the exam
 class TestPage extends StatefulWidget {
@@ -72,33 +72,32 @@ class _TestPageState extends State<TestPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: const [
                         Text(
-                          '5th',
+                          'Name',
                           style: TextStyle(fontSize: 20, color: Colors.white),
                         ),
                         Text(
-                          'Your Rank',
+                          'Roll no.',
                           style: TextStyle(fontSize: 10, color: Colors.white),
                         )
                       ],
                     ),
                   ),
                   Expanded(
-                    flex: 5,
-                    child: Container(
-                      margin: const EdgeInsets.only(right: 20),
-                      child: Slider(
-                        value: _sliderValue,
-                        max: 5,
-                        divisions: 5,
-                        label: 'You\'ve passed ${_sliderValue.toInt()} contestants',
-                        onChanged: (double value) {
-                          setState(() {
-                            _sliderValue = value;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
+                      flex: 5,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          left: 50,
+                          right: 10,
+                        ),
+                        child: Container(
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.3),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Text("HERE GOES TIMER!", style: TextStyle(fontSize: 20)),
+                        ),
+                      )),
                 ],
               ),
             ),

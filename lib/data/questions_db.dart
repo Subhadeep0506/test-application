@@ -1,7 +1,8 @@
-import 'dart:convert';
-
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+
+import 'question.dart';
+import 'question_fields.dart';
 
 // database handling for questions and results
 class QuestionsDatabase {
@@ -95,50 +96,4 @@ class QuestionsDatabase {
     // returning the table as a list
     return result.map((json) => Question.fromJson(json)).toList();
   }
-}
-
-class Question {
-  int? id;
-  String? question;
-  int? option;
-  int? selected;
-
-  Question({this.id, this.option, this.question});
-  Map<String, Object?> toJson() => {
-        QuestionFields.id: id,
-        QuestionFields.question: question,
-        QuestionFields.selectedOption: selected,
-      };
-
-  Question copy({
-    int? id,
-    String? question,
-    int? option,
-    int? selected,
-  }) =>
-      Question(
-        id: id ?? this.id,
-        option: option ?? this.option,
-        question: question ?? this.question,
-      );
-
-  static Question fromJson(Map<String, Object?> first) => Question(
-        id: first[QuestionFields.id] as int?,
-        question: first[QuestionFields.question] as String?,
-        option: first[QuestionFields.selectedOption] as int?,
-      );
-}
-
-class QuestionFields {
-  static String id = '_id';
-  static String question = 'question';
-  static String correctOption = 'option';
-  static String selectedOption = 'selected';
-
-  static final List<String> values = [
-    id,
-    question,
-    correctOption,
-    selectedOption,
-  ];
 }
