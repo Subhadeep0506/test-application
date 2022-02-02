@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_application_v1/customs/custom_timer.dart';
+import 'package:test_application_v1/customs/times.dart';
 
 class CustomAppbar extends StatefulWidget {
   const CustomAppbar({Key? key}) : super(key: key);
@@ -9,7 +10,7 @@ class CustomAppbar extends StatefulWidget {
 }
 
 class _CustomAppbarState extends State<CustomAppbar> {
-  CustomTimer t = CustomTimer();
+  Times t = Times();
 
   @override
   Widget build(BuildContext context) {

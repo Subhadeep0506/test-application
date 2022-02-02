@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
-import './home_page.dart';
+import 'package:test_application_v1/wrapper.dart';
+import 'home/home_page.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -25,7 +26,7 @@ class SplashPage extends StatelessWidget {
         ),
       ),
       loaderColor: Colors.white,
-      navigateAfterSeconds: HomePage(), //TODO: Add homepage,
+      navigateAfterSeconds: Wrapper(), //TODO: Add homepage,
     );
   }
 }
