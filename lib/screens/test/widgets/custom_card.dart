@@ -2,6 +2,7 @@ import 'dart:core';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:test_application_v1/data/question_database_handler.dart';
 import '/screens/test/widgets/custom_alert_dialog.dart';
 import '/data/questions.dart';
 
@@ -23,38 +24,28 @@ typedef PageNumberCallBack = void Function(int index);
 
 class CustomCardState extends State<CustomCard> {
   // Temporarily using dummy list data to show questions and options
-  var q = Questions();
-  int currCard = 0;
+  late List<Map> _questions;
+  late List<Object> _options;
   List<QuestionCard> cards = [];
+  int currCard = 0;
 
   CarouselController carouselController = CustomCard().carouselController;
-
-  void update() {}
 
   @override
   void initState() {
     super.initState();
-    cards = [
-      QuestionCard(
-        q.questions[0]['question'],
-        q.questions[0]['id'],
-        q.questions[0]['options'],
-      ),
-      QuestionCard(
-        q.questions[1]['question'],
-        q.questions[1]['id'],
-        q.questions[1]['options'],
-      ),
-      QuestionCard(
-        q.questions[2]['question'],
-        q.questions[2]['id'],
-        q.questions[2]['options'],
-      ),
-      QuestionCard(
-        q.questions[3]['question'],
-        q.questions[3]['id'],
-        q.questions[3]['options'],
-      ),
+    initializeVariables();
+    cards = [];
+  }
+
+  Future<void> initializeVariables() async {
+    _questions = await QuestionDatabaseHelper().getAllTables();
+
+    _options = [
+      _questions[currCard]['option1'],
+      _questions[currCard]['option2'],
+      _questions[currCard]['option3'],
+      _questions[currCard]['option4'],
     ];
   }
 

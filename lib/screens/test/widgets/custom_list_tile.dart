@@ -26,7 +26,7 @@ class _CustomListTileState extends State<CustomListTile> {
   }
 
   Future<void> initializeVariables() async {
-    _questions = (await QuestionDatabaseHelper().getQuestionById(id));
+    _questions = await QuestionDatabaseHelper().getQuestionById(id);
 
     _selectedValue = _questions['selected'];
     options = [
